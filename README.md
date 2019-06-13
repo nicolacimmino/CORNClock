@@ -1,2 +1,2 @@
-# CORN_Clock
-COloured Roman Numerals Clock
+# CORN Clock
+**CO**loured **R**oman **N**umerals Clock
