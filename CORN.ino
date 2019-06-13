@@ -14,138 +14,36 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#include <FastLED.h>
-
-#define NUM_LEDS 30
-
-CRGB leds[NUM_LEDS];
-
+#include "RomanDisplay.h"
 
 int hours = 15;
-int minutes = 02;
+int minutes = 2;
 int seconds = 0;
 
+RomanDisplay display;
+
 void setup()
-{
-    FastLED.addLeds<WS2812B, 6, GRB>(leds, NUM_LEDS);
-    FastLED.setCorrection(TypicalSMD5050);
-    FastLED.setBrightness(8);
-    clearDisplay();
+{ 
+    display.clearDisplay();
 }
 
 void loop()
 {
-    clearDisplay();
-
-    printNumber(hours);
-    printRomanNumeral("W");
-    printNumber(minutes);
-    printRomanNumeral("W");
-    printNumber(seconds);    
-    FastLED.show();
+    display.clearDisplay();
+    display.printNumber(hours);
+    display.printNumber(minutes);
+    display.printNumber(seconds);
     delay(1000);
 
     seconds = (seconds + 1) % 60;
 
-    if(seconds == 0) {
+    if (seconds == 0)
+    {
         minutes = (minutes + 1) % 60;
     }
 
-    if(seconds == 0 && minutes == 0) {
+    if (seconds == 0 && minutes == 0)
+    {
         hours = (hours + 1) % 24;
     }
-}
-
-uint8_t ledIndex = 0;
-
-void printNumber(uint8_t number) 
-{
-    while (number)
-    {
-        printRomanNumeral(convert(number));
-    }
-}
-
-void clearDisplay()
-{
-    for (int ix = 0; ix < NUM_LEDS; ix++)
-    {
-        leds[ix] = CRGB(0, 0, 0);
-    }
-    ledIndex = 0;    
-}
-
-void printRomanNumeral(const char *romanNumeral)
-{
-    while (*romanNumeral)
-    {
-        switch (*romanNumeral)
-        {
-        case 'I':
-            leds[ledIndex] = CRGB::Blue;
-            break;
-        case 'V':
-            leds[ledIndex] = CRGB::Green;
-            break;
-        case 'X':
-            leds[ledIndex] = CRGB::Red;
-            break;
-        case 'L':
-            leds[ledIndex] = CRGB::Yellow;
-            break;
-        case 'W':
-            leds[ledIndex] = CRGB(50,50,50);
-            break;            
-        }
-        ledIndex++;
-        romanNumeral++;
-    }    
-}
-
-const char *convert(uint8_t &numeral)
-{
-    if (numeral >= 50)
-    {
-        numeral -= 50;
-        return "L";
-    }
-
-    if (numeral >= 40)
-    {
-        numeral -= 40;
-        return "XL";
-    }
-
-    if (numeral >= 10)
-    {
-        numeral -= 10;
-        return "X";
-    }
-
-    uint8_t units = numeral;
-    numeral = 0;
-
-    switch (units)
-    {
-    case 1:
-        return "I";
-    case 2:
-        return "II";
-    case 3:
-        return "III";
-    case 4:
-        return "IV";
-    case 5:
-        return "V";
-    case 6:
-        return "VI";
-    case 7:
-        return "VII";
-    case 8:
-        return "VIII";
-    case 9:
-        return "IX";
-    }
-
-    return "";
 }
