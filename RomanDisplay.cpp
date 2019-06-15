@@ -4,11 +4,11 @@
 RomanDisplay::RomanDisplay()
 {
     FastLED.addLeds<WS2812B, PIN_LED_DATA, GRB>(this->leds, NUM_LEDS);
-    FastLED.setBrightness(8);
+    FastLED.setBrightness(255);
 }
 
 void RomanDisplay::convertToRoman(uint8_t number, char *result)
-{
+{        
     struct
     {
         unsigned int value;
@@ -37,10 +37,14 @@ void RomanDisplay::convertToRoman(uint8_t number, char *result)
     }
 }
 
-void RomanDisplay::printNumber(uint8_t number)
+void RomanDisplay::printNumber(uint8_t number, uint8_t startIndex, uint8_t sectionLength)
 {
     char romanNumeralBuffer[10];
     convertToRoman(number, romanNumeralBuffer);
+
+    startIndex += ((sectionLength - 2 * strlen(romanNumeralBuffer)) >> 1);
+
+    CRGB colour = CRGB::White;
 
     for (char *bufferIterator = romanNumeralBuffer; *bufferIterator; ++bufferIterator)
     {
@@ -48,32 +52,38 @@ void RomanDisplay::printNumber(uint8_t number)
             switch (*bufferIterator)
             {
             case 'I':
-                this->leds[printLedIndex] = CRGB::Blue;
+                colour = CRGB::Blue;
                 break;
             case 'V':
-                this->leds[printLedIndex] = CRGB::Green;
+                colour = CRGB::Green;
                 break;
             case 'X':
-                this->leds[printLedIndex] = CRGB::Red;
+                colour = CRGB::Red;
                 break;
             case 'L':
-                this->leds[printLedIndex] = CRGB::Yellow;
+                colour = CRGB::Yellow;
                 break;
             }
-            this->printLedIndex++;
+
+            // Due to mechanical limiations in the proto it was more handy to
+            // have leds indexed counterclockwise, however, it's far more logical
+            // to read the clock clocwise. We fix it here because software is 
+            // cheaper than disassembling and rewiring.
+            this->leds[NUM_LEDS - startIndex] = colour;            
+            startIndex+=2;            
         }
-    }
-
-    this->printLedIndex++;
-
-    FastLED.show();
+    }    
 }
 
 void RomanDisplay::clearDisplay()
 {
     for (int ix = 0; ix < NUM_LEDS; ix++)
     {
-        this->leds[ix] = CRGB(0, 0, 0);
-    }
-    this->printLedIndex = 0;
+        this->leds[ix] = CRGB(100,120,120);
+    }    
+}
+
+void RomanDisplay::show()
+{
+    FastLED.show();
 }

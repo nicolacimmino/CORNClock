@@ -15,24 +15,32 @@
 //
 
 #include "RomanDisplay.h"
+#include "RTC.h"
 
-int hours = 15;
-int minutes = 2;
+int hours = 21;
+int minutes = 8;
 int seconds = 0;
 
 RomanDisplay display;
+RTC rtc;
 
 void setup()
-{ 
+{
     display.clearDisplay();
+    display.show();
+
+    rtc.initialize();
+    rtc.setTime(21, 30, 00);
 }
 
 void loop()
 {
     display.clearDisplay();
-    display.printNumber(hours);
-    display.printNumber(minutes);
-    display.printNumber(seconds);
+    display.printNumber(rtc.getHours(), 0, 15);
+    display.printNumber(rtc.getMinutes(), 15, 15);
+    //display.printNumber(seconds, 18, 11);
+    display.show();
+
     delay(1000);
 
     seconds = (seconds + 1) % 60;

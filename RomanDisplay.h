@@ -11,12 +11,12 @@ class RomanDisplay
 {
 public:    
     RomanDisplay();
-    void printNumber(uint8_t number);
+    void printNumber(uint8_t number, uint8_t startIndex, uint8_t sectionLength);
     void clearDisplay();
+    void show();
 
 private:
-    CRGB leds[NUM_LEDS];
-    uint8_t printLedIndex = 0;
+    CRGB leds[NUM_LEDS];    
     void convertToRoman(uint8_t number, char *result);
 };
 
