@@ -1,10 +1,10 @@
 # CORN Clock
 
-I have recently bought a string of WS2812B addressable LEDs and I was looking for something to do with them When I cam across this palm shaped "fluorescent" light in a pound shop. I knew I wanted, somehow, to make a timepiece out of it. 
+I have recently bought a string of WS2812B addressable LEDs and I was looking for something to do with them When I came across this palm shaped "fluorescent" light in a pound shop. I knew I wanted, somehow, to make a timepiece out of it. 
 
-I made a first attempt to color code time with resistors colours that failed mostly due the poor color gamut of the LEDs, which made it impossible to distinguish some of the colours. This implied I needed to come up with something using less colours. 
+I made a first attempt to color code time with resistors colours that failed mostly due to the poor color gamut of the LEDs, which made it impossible to distinguish some of the colours. This implied I needed to come up with something using less colours. 
 
-The next thing that came to mind was roman numerals and, once I came up with the CORN acronym (**CO**loured **R**oman **N**umerals) I was sold because, we all know it, we need an acronym we think it's cool even if it isn't!
+The next thing that came to mind was roman numerals and, once I came up with the CORN acronym (**CO**loured **R**oman **N**umerals) I was sold because, we all know it, we need an acronym we think is cool even if it isn't!
 
 I settled on the following coding:
 
