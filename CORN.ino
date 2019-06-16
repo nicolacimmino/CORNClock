@@ -1,3 +1,6 @@
+//
+//  A palm shaped lamp showing the current time in COlour coded Roman Numerals.
+//
 //  Copyright (C) 2019 Nicola Cimmino
 //
 //    This program is free software: you can redistribute it and/or modify
@@ -17,10 +20,6 @@
 #include "RomanDisplay.h"
 #include "RTC.h"
 
-int hours = 21;
-int minutes = 8;
-int seconds = 0;
-
 RomanDisplay display;
 RTC rtc;
 
@@ -30,7 +29,7 @@ void setup()
     display.show();
 
     rtc.initialize();
-    rtc.setTime(21, 30, 00);
+    rtc.setTime(9, 51, 00);
 }
 
 void loop()
@@ -38,20 +37,7 @@ void loop()
     display.clearDisplay();
     display.printNumber(rtc.getHours(), 0, 15);
     display.printNumber(rtc.getMinutes(), 15, 15);
-    //display.printNumber(seconds, 18, 11);
     display.show();
 
     delay(1000);
-
-    seconds = (seconds + 1) % 60;
-
-    if (seconds == 0)
-    {
-        minutes = (minutes + 1) % 60;
-    }
-
-    if (seconds == 0 && minutes == 0)
-    {
-        hours = (hours + 1) % 24;
-    }
 }

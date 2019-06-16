@@ -1,3 +1,22 @@
+//
+//  RomanDisplay wraps the logic to drive a string of WS2812B addressable LEDs and show 
+//  color coded roman numerals.
+//
+//  Copyright (C) 2019 Nicola Cimmino
+//
+//    This program is free software: you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation, either version 3 of the License, or
+//    (at your option) any later version.
+//
+//   This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program.  If not, see http://www.gnu.org/licenses/.
+//
 
 #include "RomanDisplay.h"
 
@@ -7,7 +26,7 @@ RomanDisplay::RomanDisplay()
     FastLED.setBrightness(255);
 }
 
-void RomanDisplay::convertToRoman(uint8_t number, char *result)
+void RomanDisplay::convertToRoman(byte number, char *result)
 {        
     struct
     {
@@ -37,7 +56,20 @@ void RomanDisplay::convertToRoman(uint8_t number, char *result)
     }
 }
 
-void RomanDisplay::printNumber(uint8_t number, uint8_t startIndex, uint8_t sectionLength)
+void RomanDisplay::clearDisplay()
+{
+    for (int ix = 0; ix < NUM_LEDS; ix++)
+    {
+        this->leds[ix] = ROMAN_DISPLAY_BLANK;
+    }    
+}
+
+void RomanDisplay::show()
+{
+    FastLED.show();
+}
+
+void RomanDisplay::printNumber(byte number, byte startIndex, byte sectionLength)
 {
     char romanNumeralBuffer[10];
     convertToRoman(number, romanNumeralBuffer);
@@ -52,16 +84,16 @@ void RomanDisplay::printNumber(uint8_t number, uint8_t startIndex, uint8_t secti
             switch (*bufferIterator)
             {
             case 'I':
-                colour = CRGB::Blue;
+                colour = ROMAN_DISPLAY_I;
                 break;
             case 'V':
-                colour = CRGB::Green;
+                colour = ROMAN_DISPLAY_V;
                 break;
             case 'X':
-                colour = CRGB::Red;
+                colour = ROMAN_DISPLAY_X;
                 break;
             case 'L':
-                colour = CRGB::Yellow;
+                colour = ROMAN_DISPLAY_L;
                 break;
             }
 
@@ -73,17 +105,4 @@ void RomanDisplay::printNumber(uint8_t number, uint8_t startIndex, uint8_t secti
             startIndex+=2;            
         }
     }    
-}
-
-void RomanDisplay::clearDisplay()
-{
-    for (int ix = 0; ix < NUM_LEDS; ix++)
-    {
-        this->leds[ix] = CRGB(100,120,120);
-    }    
-}
-
-void RomanDisplay::show()
-{
-    FastLED.show();
 }
