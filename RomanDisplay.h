@@ -35,6 +35,7 @@ class RomanDisplay
 {
 public:
     RomanDisplay();
+    void setBrightness(byte brightness);
     void printNumber(byte number, byte startIndex, byte sectionLength);
     void clearDisplay();
     void show();

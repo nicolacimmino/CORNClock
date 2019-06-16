@@ -26,6 +26,11 @@ RomanDisplay::RomanDisplay()
     FastLED.setBrightness(255);
 }
 
+void RomanDisplay::setBrightness(byte brightness)
+{    
+    FastLED.setBrightness(brightness);
+}
+
 void RomanDisplay::convertToRoman(byte number, char *result)
 {        
     struct
