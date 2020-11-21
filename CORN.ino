@@ -20,6 +20,7 @@
 #include "RomanDisplay.h"
 #include "RTC.h"
 
+
 RomanDisplay display;
 RTC rtc;
 
@@ -29,7 +30,7 @@ void setup()
     display.show();
 
     rtc.initialize();
-    rtc.setTime(9, 51, 00);
+    //rtc.setTime(11, 41, 00);
 }
 
 void loop()
@@ -40,4 +41,7 @@ void loop()
     display.show();
 
     delay(1000);
+    // float val = 2+(exp(4.0*sin(millis()/2000.0*PI)) - 0.36787944)*4;    
+    // display.setBrightness(val);
+        
 }
