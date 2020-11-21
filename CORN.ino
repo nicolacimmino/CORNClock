@@ -18,30 +18,65 @@
 //
 
 #include "RomanDisplay.h"
-#include "RTC.h"
+#include "NRF24L01RadioDriver.h"
+#include "uRTCLib.h"
 
+#define LED_PIN 7
 
+uRTCLib rtc(0x68);
 RomanDisplay display;
-RTC rtc;
+NRF24L01RadioDriver *radio;
 
 void setup()
 {
+    Wire.begin();
+    Serial.begin(9600);
     display.clearDisplay();
     display.show();
 
-    rtc.initialize();
-    //rtc.setTime(11, 41, 00);
+    radio = new NRF24L01RadioDriver(2);
+    radio->setRXExtendedPreamble(643234);
+    radio->setTXExtendedPreamble(643234);
+    radio->setTXPower(3);
+    radio->setRFChannel(32);
+
+    pinMode(LED_PIN, OUTPUT);
+    digitalWrite(LED_PIN, HIGH);
 }
 
 void loop()
 {
-    display.clearDisplay();
-    display.printNumber(rtc.getHours(), 0, 15);
-    display.printNumber(rtc.getMinutes(), 15, 15);
-    display.show();
+    char buffer[64];
+    uint8_t dataLen = 64;
+    if (radio->receive(buffer, &dataLen, 1000))
+    {       
+        Serial.println(buffer); 
+        char *token = strtok(buffer, ",");
+        if (strcmp(*token, "^T"))
+        {
+            token = strtok(NULL, ",");
+            uint8_t h = atoi(token);
+            token = strtok(NULL, ",");
+            uint8_t m = atoi(token);
+            token = strtok(NULL, ",");
+            uint8_t s = atoi(token);
 
-    delay(1000);
-    // float val = 2+(exp(4.0*sin(millis()/2000.0*PI)) - 0.36787944)*4;    
-    // display.setBrightness(val);
-        
+            Serial.println(h);
+            Serial.println(m);
+            Serial.println(s);
+            rtc.set(s, m, h, 0, 0, 0, 0);          
+
+            digitalWrite(LED_PIN, LOW);
+            delay(200);
+            digitalWrite(LED_PIN, HIGH);
+        }
+
+        memset(buffer, 0, 64);
+    }
+
+    rtc.refresh();
+    display.clearDisplay();
+    display.printNumber(rtc.hour(), 0, 15);
+    display.printNumber(rtc.minute(), 15, 15);
+    display.show();
 }

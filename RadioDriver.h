@@ -1,7 +1,6 @@
+// RadioDriver Driver is part of LoP-RAN.
 //
-//  RTC wraps the logic to drive a DS3234 RTC Chip.
-//
-//  Copyright (C) 2019 Nicola Cimmino
+//  Copyright (C) 2020 Nicola Cimmino
 //
 //    This program is free software: you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -17,25 +16,24 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-#ifndef __RTC_H__
-#define __RTC_H__
+#ifndef __RADIO_DRIVER_H__
+#define __RADIO_DRIVER_H__
 
 #include <Arduino.h>
-#include <SPI.h>
 
-class RTC
+class RadioDriver
 {
-public:
-  void initialize();
-  void setTime(int v_hour, int v_minute, int v_second);
-  byte getHours();
-  byte getMinutes();
-  byte getSeconds();
-
 private:
-  byte readBCDRegister(byte address);
-  void writeBCDRegister(byte address, byte value);
-  void writeRegister(byte address, byte value);
+public:
+    virtual void setRXExtendedPreamble(uint64_t extended_preamble) = 0;
+    virtual void setTXExtendedPreamble(uint64_t extended_preamble) = 0;
+    virtual void setTXPower(uint8_t power) = 0;
+    virtual void setRFChannel(uint8_t channel) = 0;
+    virtual void send(char *buffer, int length) = 0;
+    virtual bool receive(char *buffer, uint8_t *bufferDataSize, uint16_t timeoutMilliseconds) = 0;
+    uint16_t errTOUT = 0;
+    uint16_t errOVFL = 0;
+    uint16_t errOOS = 0;
 };
 
 #endif
