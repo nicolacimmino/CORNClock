@@ -19,5 +19,5 @@ Contrary to what one might believe the hardest part of the project has been to p
 
 ![photo](documentation/palm.png)
 
-Reading the above clockwise it shows XXIII IV, so 23:04.
+Reading the above clockwise it shows XVII VI, so 17:06.
 
