@@ -17,7 +17,6 @@
 //    along with this program.  If not, see http://www.gnu.org/licenses/.
 //
 
-
 #include "RomanDisplay.h"
 #include <DCServices.h>
 #include "uRTCLib.h"
@@ -26,7 +25,6 @@
 
 uRTCLib rtc(0x68);
 RomanDisplay display;
-NRF24L01RadioDriver *radio;
 
 DCServices *dcServices;
 
@@ -41,6 +39,11 @@ void setup()
 
     pinMode(LED_PIN, OUTPUT);
     digitalWrite(LED_PIN, HIGH);
+
+    // Uncomment and set your own very secret key to initialize the device EEPROM.
+    // This key must match on all devices as it's used to generate and veryify datagrams HMACs.
+    // uint8_t hmacKey[] = {0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39};
+    // eeprom_write_block(hmacKey, DCCORE_EEPROM_HMAC_KEY, DCCORE_EEPROM_HMAC_KEY_LEN);
 }
 
 void loop()
