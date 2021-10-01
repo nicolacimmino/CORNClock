@@ -15,9 +15,9 @@ I settled on the following coding:
 |Green| V | 5 |
 |Blue| I | 1 |
 
-Contrary to what one might believe the hardest part of the project has been to picture the damn thing in action! The best I could pull off is this lousy picture that doesn't quite make justice to the actual look of the final product.
+~~Contrary to what one might believe the hardest part of the project has been to picture the damn thing in action! The best I could pull off is this lousy picture that doesn't quite make justice to the actual look of the final product.~~ Update: got myself an actual camera (previous picture was shot with a phone) and, while this might not win a photograh of the year award, it surely does the piece more justice.
 
 ![photo](documentation/palm.png)
 
-Reading the above clockwise it shows XVII VI, so 17:06.
+Reading the above clockwise it shows XV XXVIII, so 15:18.
 
